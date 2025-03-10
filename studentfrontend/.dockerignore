@@ -1,0 +1,13 @@
+# Ignoriere node_modules (wird von Docker gebaut)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignoriere den Build-Ordner (wird im Container gebaut)
+build/
+
+# Editor- und Betriebssystem-spezifische Dateien
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
