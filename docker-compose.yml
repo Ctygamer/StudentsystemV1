@@ -15,6 +15,27 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+  database_test:
+    image: mysql:8.0
+    container_name: mysql_db_test
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: studentsystem
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+
+
   backend:
     build: ./studentsystem
     container_name: studentsystem_backend
@@ -45,5 +66,20 @@ services:
     ports:
       - "8081:8081"
 
+  test:
+    build:
+      context: .
+      dockerfile: studentsystem/src/test/Dockerfile.test
+    container_name: studentsystem_tests
+    depends_on:
+      database_test:
+        condition: service_healthy  # ✅ Tests starten erst, wenn MySQL bereit ist
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db_test:3306/studentsystem?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    command: [ "mvn", "test" ]
+
 volumes:
   mysql_data:
+  mysql_data_test:

@@ -1,0 +1,16 @@
+# Basis-Image mit Maven und Java
+FROM openjdk:21-jdk-slim
+
+# Maven installieren
+RUN apt-get update && apt-get install -y maven
+# Arbeitsverzeichnis setzen
+WORKDIR /app
+
+# Projektdateien kopieren (ohne target)
+COPY studentsystem /app
+
+# Abhängigkeiten zwischenspeichern, um Builds zu beschleunigen
+RUN mvn dependency:go-offline
+
+# Tests ausführen
+CMD ["mvn", "test"]
