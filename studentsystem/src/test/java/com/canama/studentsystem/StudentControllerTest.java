@@ -46,7 +46,7 @@ class StudentControllerTest {
     @Test
     void getAllStudents_ShouldReturnList() throws Exception {
         Mockito.when(studentService.getAllStudents())
-                .thenReturn(List.of(new StudentDto(1, "Max", "Mustermann", List.of())));
+                .thenReturn(List.of(new StudentDto(1, "Max", "Musterland", List.of())));
 
         mockMvc.perform(get("/student"))
                 .andExpect(status().isOk())
@@ -56,8 +56,8 @@ class StudentControllerTest {
     // Testet, ob die Methode addStudent() des StudentControllers einen Studenten hinzufügt und den hinzugefügten Studenten zurückgibt.
     @Test
     void addStuden_ShouldReturnCreatedStudent() throws Exception {
-        StudentDto studentDto = new StudentDto(null, "Max", "Mustermann", new ArrayList<>());
-        StudentDto savedStudentDto = new StudentDto(2, "Max", "Mustermann", new ArrayList<>());
+        StudentDto studentDto = new StudentDto(null, "Max", "Musterland", new ArrayList<>());
+        StudentDto savedStudentDto = new StudentDto(2, "Max", "Musterland", new ArrayList<>());
 
         Mockito.when(studentService.saveStudent(Mockito.any(StudentDto.class)))
                 .thenReturn(savedStudentDto);
@@ -66,7 +66,7 @@ class StudentControllerTest {
                 {
                     "id": null,
                     "name": "Max",
-                    "address": "Mustermann",
+                    "address": "Musterland",
                     "courses": []
                 }
                 """;
@@ -77,7 +77,7 @@ class StudentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(2)))
                 .andExpect(jsonPath("$.name", is("Max")))
-                .andExpect(jsonPath("$.address", is("Mustermann")))
+                .andExpect(jsonPath("$.address", is("Musterland")))
                 .andExpect(jsonPath("$.courses", hasSize(0)));
     }
 
@@ -93,7 +93,7 @@ class StudentControllerTest {
     // Testet, ob die Methode updateStudentCourses() des StudentControllers die Kurse eines Studenten aktualisiert.
     @Test
     void updateStudentCourse_ShouldReturnUpdatedStudent() throws Exception {
-        StudentDto updatedStudentDto = new StudentDto(1, "Max", "Mustermann", List.of(new CourseDto(1, "Math", "Algebra")));
+        StudentDto updatedStudentDto = new StudentDto(1, "Max", "Musterland", List.of(new CourseDto(1, "Math", "Algebra")));
 
         Mockito.when(studentService.updateStudentCourses(1, List.of(1)))
                 .thenReturn(updatedStudentDto);
@@ -108,7 +108,7 @@ class StudentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.name", is("Max")))
-                .andExpect(jsonPath("$.address", is("Mustermann")))
+                .andExpect(jsonPath("$.address", is("Musterland")))
                 .andExpect(jsonPath("$.courses", hasSize(1)));
     }
 

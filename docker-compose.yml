@@ -14,6 +14,12 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin","ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
 
   database_test:
     image: mysql:8.0
@@ -27,7 +33,7 @@ services:
     ports:
       - "3308:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_data_test:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
@@ -45,7 +51,7 @@ services:
     depends_on:
       - database
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/studentsystem?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/studentsystem?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
