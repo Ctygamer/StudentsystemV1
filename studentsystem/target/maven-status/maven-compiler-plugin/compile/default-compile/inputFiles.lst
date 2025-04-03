@@ -1,3 +1,5 @@
+C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\config\RabbitMQConfig.java
+C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\config\SwaggerConfig.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\controller\CourseController.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\controller\HomeController.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\controller\StudentController.java
@@ -8,6 +10,8 @@ C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\jav
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\exceptions\GlobalExceptionHandler.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\mapper\CourseMapper.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\mapper\StudentMapper.java
+C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\rabbitmq\StudentRpcClient.java
+C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\rabbitmq\StudentRpcConsumer.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\repository\CourseRepository.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\repository\StudentRepository.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\service\CourseService.java
@@ -15,4 +19,3 @@ C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\jav
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\service\StudentService.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\service\StudentServiceImpl.java
 C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\StudentsystemApplication.java
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\SwaggerConfig.java

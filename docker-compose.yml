@@ -50,11 +50,24 @@ services:
       - "8080:8080"
     depends_on:
       - database
+      - rabbitmq
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/studentsystem?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+  rabbitmq:  # +++++++++++++++++++ Neu RPC eingefügt ++++++++++++++++++++++++++++11
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"    # AMQP
+      - "15672:15672"  # Web UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
 
   frontend:
     build: ./studentfrontend

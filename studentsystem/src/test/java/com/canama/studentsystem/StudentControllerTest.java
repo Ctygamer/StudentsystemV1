@@ -3,8 +3,8 @@ package com.canama.studentsystem;
 import com.canama.studentsystem.DTO.CourseDto;
 import com.canama.studentsystem.DTO.StudentDto;
 import com.canama.studentsystem.controller.StudentController;
-import com.canama.studentsystem.service.CourseService;
-import com.canama.studentsystem.service.StudentService;
+import com.canama.studentsystem.rabbitmq.StudentRpcClient;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,42 +23,39 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// @ExtendWith(SpringExtension.class) ist eine Annotation, die JUnit mit Spring-Unterstützung aktiviert.
-// @WebMvcTest(StudentController.class) ist eine Annotation, die den Test auf den StudentController beschränkt.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(StudentController.class)
 class StudentControllerTest {
 
-    // @Autowired ist eine Annotation, die die automatische Verdrahtung von Spring-Beans aktiviert.
-    // private MockMvc mockMvc; ist eine Instanzvariable, die die MockMvc-Instanz enthält.
     @Autowired
     private MockMvc mockMvc;
 
-    // @MockBean ist eine Annotation, die eine vorhandene Bean durch ein Mock-Objekt ersetzt.
     @MockBean
-    private StudentService studentService;
+    private StudentRpcClient rpcClient;
 
-    // @Test ist eine Annotation, die eine Methode als Testmethode kennzeichnet.
     @Test
     void getAllStudents_ShouldReturnList() throws Exception {
-        Mockito.when(studentService.getAllStudents())
-                .thenReturn(List.of(new StudentDto(1, "Max", "Musterland", List.of())));
+        List<StudentDto> mockStudents = List.of(
+                new StudentDto(1, "Max", "Musterland", List.of())
+        );
+
+        // Verwende die Überladung ohne Parameter
+        Mockito.when(rpcClient.getAllStudentsViaRpc()).thenReturn(mockStudents);
 
         mockMvc.perform(get("/student"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].name", is("Max")));
     }
 
-    // Testet, ob die Methode addStudent() des StudentControllers einen Studenten hinzufügt und den hinzugefügten Studenten zurückgibt.
     @Test
-    void addStuden_ShouldReturnCreatedStudent() throws Exception {
+    void addStudent_ShouldReturnCreatedStudent() throws Exception {
         StudentDto studentDto = new StudentDto(null, "Max", "Musterland", new ArrayList<>());
         StudentDto savedStudentDto = new StudentDto(2, "Max", "Musterland", new ArrayList<>());
 
-        Mockito.when(studentService.saveStudent(Mockito.any(StudentDto.class)))
+        Mockito.when(rpcClient.saveStudentViaRpc(Mockito.any(StudentDto.class)))
                 .thenReturn(savedStudentDto);
 
         String studentJson = """
@@ -72,8 +68,8 @@ class StudentControllerTest {
                 """;
 
         mockMvc.perform(post("/student")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(studentJson))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(studentJson))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(2)))
                 .andExpect(jsonPath("$.name", is("Max")))
@@ -81,26 +77,24 @@ class StudentControllerTest {
                 .andExpect(jsonPath("$.courses", hasSize(0)));
     }
 
-    // Testet, ob die Methode deleteStudent() des StudentControllers einen Studenten löscht.
     @Test
-    void deleteStudent_ShouldReturnDeletedStudent() throws Exception {
-        Mockito.doNothing().when(studentService).deleteStudentById(1);
+    void deleteStudent_ShouldReturnConfirmation() throws Exception {
+        Mockito.when(rpcClient.deleteStudentByIdViaRpc(1))
+                .thenReturn("Student gelöscht!");
 
         mockMvc.perform(delete("/student/{id}", 1))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().string("Student gelöscht!"));
     }
 
-    // Testet, ob die Methode updateStudentCourses() des StudentControllers die Kurse eines Studenten aktualisiert.
     @Test
     void updateStudentCourse_ShouldReturnUpdatedStudent() throws Exception {
         StudentDto updatedStudentDto = new StudentDto(1, "Max", "Musterland", List.of(new CourseDto(1, "Math", "Algebra")));
 
-        Mockito.when(studentService.updateStudentCourses(1, List.of(1)))
+        Mockito.when(rpcClient.updateStudentCoursesViaRpc(1, List.of(1)))
                 .thenReturn(updatedStudentDto);
 
-        String courseIdsJson = """
-            [1]
-            """;
+        String courseIdsJson = "[1]";
 
         mockMvc.perform(put("/student/{id}/update-courses", 1)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -111,5 +105,4 @@ class StudentControllerTest {
                 .andExpect(jsonPath("$.address", is("Musterland")))
                 .andExpect(jsonPath("$.courses", hasSize(1)));
     }
-
 }

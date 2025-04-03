@@ -1,1 +1,7 @@
+com\canama\studentsystem\CourseServiceImplTest.class
+com\canama\studentsystem\StudentDtoTest.class
+com\canama\studentsystem\StudentServiceImplTest.class
+com\canama\studentsystem\CourseControllerTest.class
 com\canama\studentsystem\StudentsystemApplicationTests.class
+com\canama\studentsystem\StudentControllerTest.class
+com\canama\studentsystem\CourseDtoTest.class
