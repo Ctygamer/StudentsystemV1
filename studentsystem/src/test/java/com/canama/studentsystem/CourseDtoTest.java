@@ -1,6 +1,7 @@
 package com.canama.studentsystem;
 
-import com.canama.studentsystem.DTO.CourseDto;
+
+import com.canama.studentsystemcommon.DTO.CourseDto;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

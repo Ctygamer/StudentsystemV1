@@ -1,5 +1,0 @@
-com\canama\websocket\chat\ChatApplication.class
-com\canama\websocket\chat\controller\ChatController.class
-com\canama\websocket\chat\config\WebsocketConfig.class
-com\canama\websocket\chat\model\Message.class
-com\canama\websocket\chat\model\Status.class

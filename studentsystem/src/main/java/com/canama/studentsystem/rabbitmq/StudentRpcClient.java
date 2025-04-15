@@ -1,6 +1,6 @@
 package com.canama.studentsystem.rabbitmq;
 
-import com.canama.studentsystem.DTO.StudentDto;
+import com.canama.studentsystemcommon.DTO.StudentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.canama.studentsystem.config.RabbitMQConfig.*;
+import static com.canama.studentsystem.config.StudentRabbitMQConfig.*;
 
 @Service
 @RequiredArgsConstructor

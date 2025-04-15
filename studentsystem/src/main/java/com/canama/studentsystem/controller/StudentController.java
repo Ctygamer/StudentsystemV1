@@ -1,6 +1,6 @@
 package com.canama.studentsystem.controller;
 
-import com.canama.studentsystem.DTO.StudentDto;
+import com.canama.studentsystemcommon.DTO.StudentDto;
 import com.canama.studentsystem.rabbitmq.StudentRpcClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class StudentController {
     private final StudentRpcClient rpcClient;
 
     @PostMapping
-    public ResponseEntity<?> add(@Valid @RequestBody StudentDto studentDto, BindingResult bindingResult) {
+    public ResponseEntity<?> save(@Valid @RequestBody StudentDto studentDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors().stream()
                     .map(error -> error.getField() + ": " + error.getDefaultMessage())
