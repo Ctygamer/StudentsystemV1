@@ -1,5 +1,6 @@
 package com.canama.studentsystem.rabbitmq;
 
+import com.canama.studentsystem.config.RabbitMQConfig;
 import com.canama.studentsystemcommon.DTO.CourseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -9,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.canama.studentsystem.datenbank.config.CourseRabbitMQConfig.*;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +18,7 @@ public class CourseRpcClient {
     private final RabbitTemplate rabbitTemplate;
 
     public CourseDto saveCourseViaRpc(CourseDto courseDto) {
-        Object response = rabbitTemplate.convertSendAndReceive(EXCHANGE, SAVE_ROUTING_KEY, courseDto);
+        Object response = rabbitTemplate.convertSendAndReceive(RabbitMQConfig.COURSE_EXCHANGE,RabbitMQConfig.COURSE_SAVE, courseDto);
         if (response == null) {
             throw new RuntimeException("Keine Antwort vom Course-RPC-Service erhalten.");
         }
@@ -26,7 +26,7 @@ public class CourseRpcClient {
     }
 
     public List<CourseDto> getAllCoursesViaRpc() {
-        Object response = rabbitTemplate.convertSendAndReceive(EXCHANGE, GETALL_ROUTING_KEY, "getAll");
+        Object response = rabbitTemplate.convertSendAndReceive(RabbitMQConfig.COURSE_EXCHANGE, RabbitMQConfig.COURSE_GET_ALL, "getAll");
         if (response == null) {
             throw new RuntimeException("Keine Antwort vom Course-RPC-Service erhalten.");
         }
@@ -34,7 +34,7 @@ public class CourseRpcClient {
     }
 
     public void deleteCourseByIdViaRpc(Integer id) {
-        Object response = rabbitTemplate.convertSendAndReceive(EXCHANGE, DELETE_ROUTING_KEY, id);
+        Object response = rabbitTemplate.convertSendAndReceive(RabbitMQConfig.COURSE_EXCHANGE, RabbitMQConfig.COURSE_DELETE, id);
         if (response == null) {
             throw new RuntimeException("Keine Antwort vom Course-RPC-Service erhalten.");
         }
@@ -44,7 +44,7 @@ public class CourseRpcClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("courseId", courseId);
         payload.put("studentId", studentId);
-        Object response = rabbitTemplate.convertSendAndReceive(EXCHANGE, ADD_STUDENT_ROUTING_KEY, payload);
+        Object response = rabbitTemplate.convertSendAndReceive(RabbitMQConfig.COURSE_EXCHANGE, RabbitMQConfig.COURSE_ADD_STUDENT, payload);
         if (response == null) {
             throw new RuntimeException("Keine Antwort vom Course-RPC-Service erhalten.");
         }

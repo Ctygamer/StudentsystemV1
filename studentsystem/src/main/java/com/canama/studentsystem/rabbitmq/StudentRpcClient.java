@@ -1,5 +1,6 @@
 package com.canama.studentsystem.rabbitmq;
 
+import com.canama.studentsystem.config.RabbitMQConfig;
 import com.canama.studentsystemcommon.DTO.StudentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -9,8 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.canama.studentsystem.config.StudentRabbitMQConfig.*;
-
 @Service
 @RequiredArgsConstructor
 public class StudentRpcClient {
@@ -18,7 +17,7 @@ public class StudentRpcClient {
     private final RabbitTemplate rabbitTemplate;
 
     public StudentDto saveStudentViaRpc(StudentDto studentDto) {
-        Object response = rabbitTemplate.convertSendAndReceive(EXCHANGE, SAVE_ROUTING_KEY, studentDto);
+        Object response = rabbitTemplate.convertSendAndReceive(RabbitMQConfig.STUDENT_EXCHANGE, RabbitMQConfig.STUDENT_SAVE, studentDto);
         if (response == null) throw new RuntimeException("Keine Antwort vom RPC-Service erhalten.");
         return (StudentDto) response;
     }
@@ -29,7 +28,7 @@ public class StudentRpcClient {
     }
 
     public List<StudentDto> getAllStudentsViaRpc(String command) {
-        Object response = rabbitTemplate.convertSendAndReceive(EXCHANGE, GETALL_ROUTING_KEY, command);
+        Object response = rabbitTemplate.convertSendAndReceive(RabbitMQConfig.STUDENT_EXCHANGE, RabbitMQConfig.STUDENT_GET_ALL, command);
         if (response == null) throw new RuntimeException("Keine Antwort vom RPC-Service erhalten.");
         return (List<StudentDto>) response;
     }
@@ -37,7 +36,7 @@ public class StudentRpcClient {
     public String deleteStudentByIdViaRpc(Integer id) {
         Map<String, Object> payload = new HashMap<>();
         payload.put("deleteId", id);
-        Object response = rabbitTemplate.convertSendAndReceive(EXCHANGE, DELETE_ROUTING_KEY, payload);
+        Object response = rabbitTemplate.convertSendAndReceive(RabbitMQConfig.STUDENT_EXCHANGE, RabbitMQConfig.STUDENT_DELETE, payload);
         if (response == null) throw new RuntimeException("Keine Antwort vom RPC-Service erhalten.");
         return (String) response;
     }
@@ -46,7 +45,7 @@ public class StudentRpcClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("updateId", id);
         payload.put("courseIds", courseIds);
-        Object response = rabbitTemplate.convertSendAndReceive(EXCHANGE, UPDATE_ROUTING_KEY, payload);
+        Object response = rabbitTemplate.convertSendAndReceive(RabbitMQConfig.STUDENT_EXCHANGE, RabbitMQConfig.STUDENT_UPDATE, payload);
         if (response == null) throw new RuntimeException("Keine Antwort vom RPC-Service erhalten.");
         return (StudentDto) response;
     }

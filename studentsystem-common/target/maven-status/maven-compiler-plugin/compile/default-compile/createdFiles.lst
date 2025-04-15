@@ -1,2 +1,3 @@
 com\canama\studentsystemcommon\DTO\StudentDto.class
+com\canama\studentsystemcommon\config\RabbitMQBaseConfig.class
 com\canama\studentsystemcommon\DTO\CourseDto.class
