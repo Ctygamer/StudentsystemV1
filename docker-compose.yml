@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: studentsystem
+      MYSQL_DATABASE: database-service
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
     ports:
@@ -15,32 +15,10 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
-      test: [ "CMD", "mysqladmin","ping", "-h", "localhost" ]
-      interval: 10s
-      retries: 5
-      start_period: 20s
-      timeout: 5s
-
-  database_test:
-    image: mysql:8.0
-    container_name: mysql_db_test
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: studentsystem
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-    ports:
-      - "3308:3306"
-    volumes:
-      - mysql_data_test:/var/lib/mysql
-    healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
-      retries: 5
-      start_period: 20s
       timeout: 5s
-
+      retries: 5
 
   backend:
     build: ./studentsystem
@@ -49,12 +27,48 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - database
+      - database    # Für direkte DB-Zugriffe, falls benötigt
+      - rabbitmq
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/studentsystem?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/database-service?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: admin
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_RABBITMQ_HOST: rabbitmq
+
+  database-service:
+    build: ./database-service
+    container_name: database-service
+    restart: always
+    ports:
+      - "8082:8080"
+    depends_on:
+        rabbitmq:
+          condition: service_healthy
+        database:
+          condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/database-service?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_RABBITMQ_HOST: rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"    # AMQP
+      - "15672:15672"  # Web UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: [ "CMD-SHELL", "rabbitmq-diagnostics -q ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   frontend:
     build: ./studentfrontend
@@ -72,20 +86,5 @@ services:
     ports:
       - "8081:8081"
 
-  test:
-    build:
-      context: .
-      dockerfile: studentsystem/src/test/Dockerfile.test
-    container_name: studentsystem_tests
-    depends_on:
-      database_test:
-        condition: service_healthy  # ✅ Tests starten erst, wenn MySQL bereit ist
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db_test:3306/studentsystem?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
-    command: [ "mvn", "test" ]
-
 volumes:
   mysql_data:
-  mysql_data_test:

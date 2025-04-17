@@ -6,6 +6,9 @@
       <list>
         <option value="$PROJECT_DIR$/chat/pom.xml" />
         <option value="$PROJECT_DIR$/studentsystem/pom.xml" />
+        <option value="$PROJECT_DIR$/database-service/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/studentsystem-common/pom.xml" />
       </list>
     </option>
   </component>
