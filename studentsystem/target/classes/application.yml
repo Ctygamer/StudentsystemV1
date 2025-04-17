@@ -11,5 +11,3 @@ spring:
     password: guest
     template:
       reply-timeout: 5000 # 5 Sekunden Timeout für RPC-Antwort
-
-

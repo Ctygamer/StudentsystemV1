@@ -1,6 +1,9 @@
 package com.canama.studentsystem.config;
 
 import com.canama.studentsystemcommon.config.RabbitMQBaseConfig;
+import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -20,4 +23,5 @@ public class RabbitMQConfig {
     public static final String COURSE_GET_ALL = "course.getAll";
     public static final String COURSE_DELETE = "course.delete";
     public static final String COURSE_ADD_STUDENT = "course.addStudent";
+
 }

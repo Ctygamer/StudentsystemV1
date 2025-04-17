@@ -3,7 +3,9 @@
   <component name="mavenExecutorSetting">
     <option name="defaultSettings">
       <ExecutionSettings>
+        <option name="alwaysUpdateSnapshot" value="true" />
         <option name="skipTests" value="true" />
+        <option name="isAlwaysUpdateSnapshot" value="true" />
         <option name="isSkipTests" value="true" />
         <option name="projectsToBuild">
           <list>
@@ -45,5 +47,12 @@
       </set>
     </option>
     <option name="visibleSettingsNotInitYet" value="false" />
+    <option name="resultCommandLineChosenProject">
+      <MavenArtifact>
+        <option name="groupId" value="com.canama.studentsystem" />
+        <option name="artifactId" value="studentsystem-parent" />
+        <option name="version" value="1.0.0" />
+      </MavenArtifact>
+    </option>
   </component>
 </project>

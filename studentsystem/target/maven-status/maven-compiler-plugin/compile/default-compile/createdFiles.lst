@@ -1,9 +1,8 @@
-com\canama\studentsystem\config\StudentRabbitMQConfig.class
 com\canama\studentsystem\controller\StudentController.class
-com\canama\studentsystem\datenbank\config\CourseRabbitMQConfig.class
 com\canama\studentsystem\rabbitmq\CourseRpcClient.class
 com\canama\studentsystem\StudentsystemApplication.class
 com\canama\studentsystem\rabbitmq\StudentRpcClient.class
+com\canama\studentsystem\config\RabbitMQConfig.class
 com\canama\studentsystem\controller\CourseController.class
 com\canama\studentsystem\controller\HomeController.class
 com\canama\studentsystem\config\SwaggerConfig$1.class

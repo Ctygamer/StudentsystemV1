@@ -1,6 +1,8 @@
 package com.canama.studentsystemcommon.DTO;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +24,8 @@ public record StudentDto(
         @NotBlank(message = "Adresse ist erforderlich")
         String address,
 
-        @NotBlank(message = "Mindestens ein Kurs auswählen")
+        @NotEmpty(message = "Mindestens ein Kurs auswählen")
         List<CourseDto> courses
+
 ) implements Serializable {
 }

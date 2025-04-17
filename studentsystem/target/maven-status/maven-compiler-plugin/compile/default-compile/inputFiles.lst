@@ -1,9 +1,8 @@
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\config\CourseRabbitMQConfig.java
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\config\StudentRabbitMQConfig.java
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\config\SwaggerConfig.java
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\controller\CourseController.java
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\controller\HomeController.java
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\controller\StudentController.java
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\rabbitmq\CourseRpcClient.java
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\rabbitmq\StudentRpcClient.java
-C:\Users\Geschäftskonto\IdeaProjects\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\StudentsystemApplication.java
+C:\Users\Geschäftskonto\Desktop\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\config\RabbitMQConfig.java
+C:\Users\Geschäftskonto\Desktop\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\config\SwaggerConfig.java
+C:\Users\Geschäftskonto\Desktop\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\controller\CourseController.java
+C:\Users\Geschäftskonto\Desktop\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\controller\HomeController.java
+C:\Users\Geschäftskonto\Desktop\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\controller\StudentController.java
+C:\Users\Geschäftskonto\Desktop\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\rabbitmq\CourseRpcClient.java
+C:\Users\Geschäftskonto\Desktop\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\rabbitmq\StudentRpcClient.java
+C:\Users\Geschäftskonto\Desktop\StudentsystemV1\studentsystem\src\main\java\com\canama\studentsystem\StudentsystemApplication.java

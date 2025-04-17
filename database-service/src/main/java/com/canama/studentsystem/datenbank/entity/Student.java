@@ -19,7 +19,7 @@ import java.util.List;
 @Data // Generiert Getter, Setter, ToString, EqualsAndHashCode und RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder // Ermöglicht die Verwendung des Builder-Patterns
 public class Student {
 
     /**

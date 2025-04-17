@@ -68,17 +68,24 @@ public class CourseRabbitMQConfig {
     }
 
     @Bean
-    public Binding bindingCourseGetAll(DirectExchange courseExchange, Queue courseGetAllQueue) {
+    public Binding bindingCourseGetAll(
+            @Qualifier(EXCHANGE)DirectExchange courseExchange,
+            @Qualifier(GETALL_QUEUE) Queue courseGetAllQueue) {
+
         return BindingBuilder.bind(courseGetAllQueue).to(courseExchange).with(GETALL_ROUTING_KEY);
     }
 
     @Bean
-    public Binding bindingCourseDelete(DirectExchange courseExchange, Queue courseDeleteQueue) {
+    public Binding bindingCourseDelete(
+            @Qualifier(EXCHANGE) DirectExchange courseExchange,
+            @Qualifier(DELETE_QUEUE) Queue courseDeleteQueue) {
         return BindingBuilder.bind(courseDeleteQueue).to(courseExchange).with(DELETE_ROUTING_KEY);
     }
 
     @Bean
-    public Binding bindingCourseAddStudent(DirectExchange courseExchange, Queue courseAddStudentQueue) {
+    public Binding bindingCourseAddStudent(
+            @Qualifier(EXCHANGE) DirectExchange courseExchange,
+            @Qualifier(ADD_STUDENT_QUEUE) Queue courseAddStudentQueue) {
         return BindingBuilder.bind(courseAddStudentQueue).to(courseExchange).with(ADD_STUDENT_ROUTING_KEY);
     }
 
